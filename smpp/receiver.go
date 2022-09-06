@@ -47,7 +47,7 @@ type Receiver struct {
 
 // HandlerFunc is the handler function that a Receiver calls
 // when a new PDU arrives.
-type HandlerFunc func(p pdu.Body)
+type HandlerFunc func(p pdu.Body, addr string)
 
 // MergeHolder is a struct which holds the slice of MessageParts for the merging of a long incoming message.
 type MergeHolder struct {
@@ -172,7 +172,7 @@ loop:
 		}
 
 		if r.MergeInterval == 0 { // Handle the PDU if merging is not needed
-			r.Handler(p)
+			r.Handler(p, "")
 			continue
 		}
 
@@ -184,7 +184,7 @@ loop:
 
 		udhList, ok = p.Fields()[pdufield.GSMUserData].(*pdufield.UDHList)
 		if !ok { // Check if GSMUserData is present inside the PDU, do not try to merge if it's not
-			r.Handler(p)
+			r.Handler(p, "")
 			continue
 		}
 
