@@ -126,7 +126,7 @@ func (t *Transmitter) handlePDU(f HandlerFunc) {
 		if rc != nil {
 			rc <- &tx{PDU: p}
 		} else if f != nil {
-			f(p)
+			f(p, t.cl.Addr)
 		}
 		if p.Header().ID == pdu.DeliverSMID { // Send DeliverSMResp
 			pResp := pdu.NewDeliverSMRespSeq(p.Header().Seq)
