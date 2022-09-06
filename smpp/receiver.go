@@ -239,7 +239,7 @@ loop:
 				p.Fields().Set(pdufield.ShortMessage, buf.Bytes())
 
 				// Handle
-				r.Handler(p)
+				r.Handler(p, "")
 			}
 		}
 	}
